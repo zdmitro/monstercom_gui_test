@@ -26,9 +26,24 @@ public class HomePage extends BasePage{
         return new LoginPage(getDriver());
     }
 
+    public ForgotPasswordPage goToForgotPasswordPage() {
+        LoginPage loginPage = new LoginPage(getDriver());
+        goToLoginPage();
+        click(loginPage.getForgotPasswordLink());
+        return new ForgotPasswordPage(getDriver());
+    }
+
+    public GetHelpPage goToGetHelpPage() {
+        ForgotPasswordPage forgotPasswordPage = new ForgotPasswordPage(getDriver());
+        goToForgotPasswordPage();
+        click(forgotPasswordPage.getParagraphGetHelpLink());
+        return new GetHelpPage(getDriver());
+    }
 
     public HomePage checkForGoToHomePage() {
         assertEquals(this.header,"monster");
         return this;
     }
+
+
 }

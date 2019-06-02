@@ -101,10 +101,10 @@ public abstract class BasePage {
     public void assertElementsDisplayed(List<By> byList) {
 
         boolean isElementDisplayed = true;
-
+        WebElement element;
         for (By e : byList) {
             try {
-                WebElement element = getDriver().findElement(e);
+                element = getDriver().findElement(e);
             } catch (NoSuchElementException ex) {
                 System.out.println(e + " - not found");
                 isElementDisplayed = false;

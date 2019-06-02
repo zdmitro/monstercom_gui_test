@@ -35,6 +35,10 @@ public class LoginPage extends BasePage {
     private By signUpLabel = By.xpath("//*[@id='SignInform']/div/h1");
     private By singUpBtn = By.id("btn-signup");
 
+    public By getForgotPasswordLink() {
+        return forgotPasswordLink;
+    }
+
     public LoginPage checkElementsDisplayed() {
         List<By> byList = Arrays.asList(
                 this.headerPage,

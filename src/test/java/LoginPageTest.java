@@ -1,6 +1,8 @@
 import org.testng.annotations.Test;
 import pages.HomePage;
 
+import static data.Data.*;
+
 public class LoginPageTest extends BaseTest{
 
     /**
@@ -15,6 +17,33 @@ public class LoginPageTest extends BaseTest{
                 // 2. Check if 11 elements are present on the page
                 .checkElementsDisplayed();
         // Expected result: elements are found on the page
+    }
+
+    @Test(priority = 1)
+    public void validLoginPage_SuccessfullAuthorization() {
+        HomePage homePage = new HomePage(getDriver());
+        homePage
+                .goToLoginPage()
+                .login(LOGIN, PASSWORD)
+                .checkForOpenAccountPage(USERNAME);
+    }
+
+    @Test(priority = 2)
+    public void invalidLoginPage_EmptyFieldsAuthorization() {
+        HomePage homePage = new HomePage(getDriver());
+        homePage
+                .goToLoginPage()
+                .login("", "")
+                .checkForEmailAndPasswordErrors();
+    }
+
+    @Test(priority = 3)
+    public void invalidLoginPage_UnknownUserAuthorization() {
+        HomePage homePage = new HomePage(getDriver());
+        homePage
+                .goToLoginPage()
+                .login("unknownUser@test.test", "12345678")
+                .checkForWarningMessage("Whoops, we noticed something incorrect...");
     }
 
 }

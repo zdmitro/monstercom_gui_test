@@ -38,6 +38,8 @@ public class LoginPage extends BasePage {
     private By emailErrorMessage = By.id("EmailAddress-error");
     private By passwordErrorMessage = By.id("Password-error");
     private By unknownUserMessage = By.xpath("//*[@id='SignInform']/div/div[1]/div/strong");
+    private By tooManyWrongAttemptsMessage = By.xpath("//*[@id='SignInform']/div/div[1]/div/ul/li");
+    private By notAValidEmailAddressMessage = By.xpath("//*[@id='EmailAddress-error']");
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -105,5 +107,28 @@ public class LoginPage extends BasePage {
         assertEquals(this.unknownUserMessage, message);
         return this;
     }
+
+    public LoginPage checkForTooManyLoginAttempts(String message) {
+
+        assertEquals(this.tooManyWrongAttemptsMessage, message);
+        return this;
+    }
+
+    public LoginPage loginMultipleTimes(String login, String password) {
+
+        writeText(this.emailAddressField, login);
+        writeText(this.passwordField, password);
+        for (int i = 0; i < 5; i++) {
+            click(this.signInBtn);
+        }
+        return this;
+    }
+
+    public LoginPage checkForInvalidEmailAddress(String message) {
+
+        assertEquals(this.notAValidEmailAddressMessage, message);
+        return this;
+    }
+
 
 }

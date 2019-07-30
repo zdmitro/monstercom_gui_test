@@ -1,5 +1,6 @@
 import org.testng.annotations.Test;
 import pages.HomePage;
+import pages.LoginPage;
 
 import static data.Data.*;
 
@@ -37,6 +38,7 @@ public class LoginPageTest extends BaseTest{
                 .checkForEmailAndPasswordErrors();
     }
 
+
     @Test(priority = 3)
     public void invalidLoginPage_UnknownUserAuthorization() {
         HomePage homePage = new HomePage(getDriver());
@@ -44,6 +46,26 @@ public class LoginPageTest extends BaseTest{
                 .goToLoginPage()
                 .login("unknownUser@test.test", "12345678")
                 .checkForWarningMessage("Whoops, we noticed something incorrect...");
+    }
+
+    @Test(priority = 4)
+    public void invalidLoginPage_TooManyAttempts() {
+        HomePage homePage = new HomePage(getDriver());
+
+        homePage
+                .goToLoginPage()
+                .loginMultipleTimes("zdmitrorover@gmail.com", "12345678")
+                .checkForTooManyLoginAttempts("Too Many Wrong Attempts");
+    }
+
+    @Test(priority = 5)
+    public void invalidLoginPage_InvalidEmailAddress() {
+        HomePage homePage = new HomePage(getDriver());
+
+        homePage
+                .goToLoginPage()
+                .login("aaa", "1234567")
+                .checkForInvalidEmailAddress("The email address you entered does not represent a valid email address.");
     }
 
 }
